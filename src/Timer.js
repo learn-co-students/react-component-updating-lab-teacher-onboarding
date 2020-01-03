@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class Timer extends Component {
   constructor() {
@@ -6,7 +6,7 @@ class Timer extends Component {
     this.timer = React.createRef();
     this.state = {
       time: 0,
-      color: "#" + Math.floor(Math.random() * 16777215).toString(16)
+      color: '#' + Math.floor(Math.random() * 16777215).toString(16),
     };
   }
 
@@ -23,6 +23,18 @@ class Timer extends Component {
     clearInterval(this.interval);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.time === nextState.time) {
+      return false
+    }
+    return true
+  }
+  
+  componentDidUpdate() {
+    this.timer.current.style.color =
+      '#' + Math.floor(Math.random() * 16777215).toString(16);
+  }
+
   render() {
     const { time, color, logText } = this.state;
     return (
@@ -37,13 +49,13 @@ class Timer extends Component {
 
   clockTick = () => {
     this.setState(prevState => ({
-      time: prevState.time + this.props.updateInterval
+      time: prevState.time + this.props.updateInterval,
     }));
   };
 
   stopClock = () => {
     clearInterval(this.interval);
-    this.setState({ className: "hidden" });
+    this.setState({ className: 'hidden' });
   };
 
   // for the 'x' button,
